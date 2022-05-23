@@ -66,10 +66,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextFormField(
                             controller: usernameCtrl,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 labelText: 'Name',
                                 prefixIcon: const Icon(Icons.title),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
+                                    borderRadius: BorderRadius.circular(8.0))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your name';
@@ -81,10 +83,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextFormField(
                             controller: phonenumCtrl,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 labelText: 'Phone Number',
                                 prefixIcon: const Icon(Icons.phone_android),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
+                                    borderRadius: BorderRadius.circular(8.0))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your phone number';
@@ -96,10 +100,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextFormField(
                             controller: emailCtrl,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 labelText: 'Email',
                                 prefixIcon: const Icon(Icons.email),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
+                                    borderRadius: BorderRadius.circular(8.0))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
@@ -111,10 +117,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextFormField(
                             controller: passwordCtrl,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 labelText: 'Password',
                                 prefixIcon: const Icon(Icons.lock),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
+                                    borderRadius: BorderRadius.circular(8.0))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter password';
@@ -122,20 +130,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 10),
                           TextFormField(
                             controller: addressCtrl,
                             minLines: 3,
                             keyboardType: TextInputType.multiline,
                             maxLines: 3,
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
                                 labelText: 'Address',
                                 alignLabelWithHint: true,
                                 prefixIcon: const Padding(
                                     padding: EdgeInsets.only(bottom: 50),
                                     child: Icon(Icons.home)),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
+                                    borderRadius: BorderRadius.circular(8.0))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter your address';
@@ -146,11 +156,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 10),
                           SizedBox(
                             width: screenWidth,
-                            height: 50,
+                            height: 35,
                             child: ElevatedButton(
                               child: const Text("Register",
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold)),
                               onPressed: () {
@@ -295,7 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }).then((response) {
       print(response.body);
       var data = jsonDecode(response.body);
-      if (response.body == "success") {
+      if (response.statusCode == 200 && data['status'] == 'success') {
         Fluttertoast.showToast(
             msg: "Success",
             toastLength: Toast.LENGTH_SHORT,

@@ -230,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void _loginUser() {
     String _email = emailCtrl.text;
     String _password = passwordCtrl.text;
-    if (_email.isNotEmpty && _password.isNotEmpty) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       http.post(
           Uri.parse("http://10.31.156.213/mytutor/mobile/php/login_user.php"),
           body: {"email": _email, "password": _password}).then((response) {

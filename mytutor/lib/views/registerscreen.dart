@@ -15,6 +15,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   late double screenHeight, screenWidth, ctrwidth;
+  // ignore: prefer_typing_uninitialized_variables
   var _image;
   String pathAsset = 'assets/images/camera.png';
   final TextEditingController usernameCtrl = TextEditingController();
@@ -295,7 +296,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String _email = emailCtrl.text;
     String _password = passwordCtrl.text;
     String _address = addressCtrl.text;
-    http.post(Uri.parse("http://10.31.156.213/mytutor/mobile/php/register.php"),
+    http.post(Uri.parse("http://10.31.154.113/mytutor/mobile/php/register.php"),
         body: {
           "name": _name,
           "phonenumber": _phonenum,
@@ -303,6 +304,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "password": _password,
           "address": _address,
         }).then((response) {
+      // ignore: avoid_print
       print(response.body);
       var data = jsonDecode(response.body);
       if (response.statusCode == 200 && data['status'] == 'success') {

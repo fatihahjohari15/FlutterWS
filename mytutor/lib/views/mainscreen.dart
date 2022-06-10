@@ -1,21 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:mytutor/views/loginscreen.dart';
 
-class MainScreen extends StatefulWidget {
+void main() => runApp(const MainScreen());
+
+class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
+  static const String _title = 'My Tutor';
+
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: _title,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: const MyStatefulWidget(),
+    );
+  }
 }
 
-class _MainScreenState extends State<MainScreen> {
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Subjects',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Tutors',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Subscribe',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Favourite',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Profile',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ignore: prefer_const_constructors
-      backgroundColor: Color.fromARGB(255, 238, 227, 235),
       appBar: AppBar(
-        title: const Text('MY Tutor'),
+        title: const Text('My Tutor'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -24,23 +71,12 @@ class _MainScreenState extends State<MainScreen> {
               accountName: Text("Fatihah Johari"),
               accountEmail: Text("teahjohari15@gmail.com"),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://cdn.myanimelist.net/r/360x360/images/characters/9/310307.jpg?s=56335bffa6f5da78c3824ba0dae14a26"),
+                backgroundImage: AssetImage("assets/images/myprofile.png"),
               ),
             ),
             _createDrawerItem(
-              icon: Icons.contact_page,
-              text: 'My Profile',
-              onTap: () {},
-            ),
-            _createDrawerItem(
-              icon: Icons.book,
-              text: 'Subject',
-              onTap: () {},
-            ),
-            _createDrawerItem(
-              icon: Icons.note_add,
-              text: 'Book Tutor',
+              icon: Icons.settings,
+              text: 'Settings',
               onTap: () {},
             ),
             _createDrawerItem(
@@ -57,28 +93,59 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Welcome to MY Tutor :)',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-    );
-  }
-
-  Widget _createDrawerItem(
-      {required IconData icon,
-      required String text,
-      required GestureTapCallback onTap}) {
-    return ListTile(
-      title: Row(
-        children: <Widget>[
-          Icon(icon),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(text),
-          )
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_stories_rounded),
+            label: 'Subjects',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Tutors',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_turned_in),
+            label: 'Subscribe',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favourite',
+            backgroundColor: Colors.pink,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+            backgroundColor: Colors.amber,
+          ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        onTap: _onItemTapped,
       ),
-      onTap: onTap,
     );
   }
+}
+
+Widget _createDrawerItem(
+    {required IconData icon,
+    required String text,
+    required GestureTapCallback onTap}) {
+  return ListTile(
+    title: Row(
+      children: <Widget>[
+        Icon(icon),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(text),
+        )
+      ],
+    ),
+    onTap: onTap,
+  );
 }

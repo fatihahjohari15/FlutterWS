@@ -131,9 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 const Text("Not register yet? ",
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 15.0)),
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -233,13 +231,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       http.post(
-          Uri.parse("http://10.31.156.213/mytutor/mobile/php/login_user.php"),
+          Uri.parse("http://10.31.154.113/mytutor/mobile/php/login_user.php"),
           body: {"email": _email, "password": _password}).then((response) {
         // ignore: avoid_print
         print(response.body);
         if (response.body == "success") {
           Fluttertoast.showToast(
-              msg: "Success",
+              msg: "Login Success",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -248,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(builder: (content) => const MainScreen()));
         } else {
           Fluttertoast.showToast(
-              msg: "Failed",
+              msg: "Login Failed",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:mytutor/views/mainscreen.dart';
+import 'package:mytutor/views/navscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mytutor/views/registerscreen.dart';
 
@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
               timeInSecForIosWeb: 1,
               fontSize: 16.0);
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (content) => const MainScreen()));
+              MaterialPageRoute(builder: (content) => const NavScreen()));
         } else {
           Fluttertoast.showToast(
               msg: "Login Failed",

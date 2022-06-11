@@ -4,7 +4,7 @@ class Tutor {
   String? tutorPhone;
   String? tutorName;
   String? tutorDescription;
-  String? tutorDatereg;
+  String? tutordateReg;
 
   Tutor(
       {this.tutorID,
@@ -12,7 +12,7 @@ class Tutor {
       this.tutorPhone,
       this.tutorName,
       this.tutorDescription,
-      this.tutorDatereg});
+      this.tutordateReg});
 
   Tutor.fromJson(Map<String, dynamic> json) {
     tutorID = json['tutor_id'];
@@ -20,7 +20,7 @@ class Tutor {
     tutorPhone = json['tutor_phone'];
     tutorName = json['tutor_name'];
     tutorDescription = json['tutor_description'];
-    tutorDatereg = json['tutor_datereg'];
+    tutordateReg = json['tutor_datereg'];
   }
 
   get tutorPhoneNumber => null;
@@ -32,7 +32,7 @@ class Tutor {
     data['tutor_phone'] = tutorPhone;
     data['tutor_name'] = tutorName;
     data['tutor_description'] = tutorDescription;
-    data['tutor_datereg'] = tutorDatereg;
+    data['tutor_datereg'] = tutordateReg;
     return data;
   }
 }

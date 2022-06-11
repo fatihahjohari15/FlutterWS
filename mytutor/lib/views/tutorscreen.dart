@@ -58,7 +58,7 @@ class _TutorScreenState extends State<TutorScreen> {
                 Expanded(
                     child: GridView.count(
                         crossAxisCount: 2,
-                        childAspectRatio: (1 / 2),
+                        childAspectRatio: (1 / 1.8),
                         children: List.generate(tutorList!.length, (index) {
                           return Card(
                               child: Column(
@@ -82,38 +82,50 @@ class _TutorScreenState extends State<TutorScreen> {
                                   child: Center(
                                     child: Column(
                                       children: [
-                                        const Text("Name:",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(fontSize: 14)),
                                         Text(
                                             tutorList![index]
                                                 .tutorName
                                                 .toString(),
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.bold)),
                                         const SizedBox(height: 5),
-                                        const Text("Email:",
-                                            style: TextStyle(fontSize: 14)),
+                                        Text(
+                                          "Tutor ID : " +
+                                              tutorList![index]
+                                                  .tutorID
+                                                  .toString(),
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.purple),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        const Text("Email :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.purple)),
                                         Text(
                                           tutorList![index]
                                               .tutorEmail
                                               .toString(),
                                           style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
+                                              fontSize: 14,
+                                              color: Colors.purple),
                                         ),
                                         const SizedBox(height: 5),
-                                        const Text("Phone:",
-                                            style: TextStyle(fontSize: 14)),
+                                        const Text("Phone Number :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.purple)),
                                         Text(
                                             tutorList![index]
                                                 .tutorPhone
                                                 .toString(),
                                             style: const TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold)),
+                                                color: Colors.purple)),
+                                        const SizedBox(height: 5),
                                       ],
                                     ),
                                   ))

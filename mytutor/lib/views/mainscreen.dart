@@ -123,28 +123,26 @@ class _MainScreenState extends State<MainScreen> {
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                                 fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.purple)),
+                                                fontWeight: FontWeight.bold)),
                                         Text(
-                                            "RM " +
+                                            "Fees : RM" +
                                                 double.parse(subjectList[index]
                                                         .subjectPrice
                                                         .toString())
                                                     .toStringAsFixed(2),
                                             style: const TextStyle(
                                                 fontSize: 12,
-                                                fontWeight: FontWeight.w700,
                                                 color: Colors.purple)),
                                         Text(
-                                            subjectList[index]
+                                            "Sessions : " +
+                                                subjectList[index]
                                                     .subjectSessions
-                                                    .toString() +
-                                                " Sessions",
+                                                    .toString(),
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.purple)),
                                         Text(
-                                            "Rating: " +
+                                            "Rating : " +
                                                 double.parse(subjectList[index]
                                                         .subjectRating
                                                         .toString())

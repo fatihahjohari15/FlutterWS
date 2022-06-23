@@ -268,6 +268,19 @@ class _TutorScreenState extends State<TutorScreen> {
                       _loadTutors(1, search);
                     },
                     child: const Text("Search"),
+                  ),
+                  Column(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          "Close",
+                          style: TextStyle(),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
                   )
                 ],
               );
@@ -324,6 +337,17 @@ class _TutorScreenState extends State<TutorScreen> {
                 ]),
               ],
             )),
+            actions: [
+              TextButton(
+                child: const Text(
+                  "Close",
+                  style: TextStyle(),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           );
         });
   }

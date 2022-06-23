@@ -295,6 +295,19 @@ class _MainScreenState extends State<MainScreen> {
                       _loadSubjects(1, search);
                     },
                     child: const Text("Search"),
+                  ),
+                  Column(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          "Close",
+                          style: TextStyle(),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
                   )
                 ],
               );
@@ -354,6 +367,17 @@ class _MainScreenState extends State<MainScreen> {
                 ]),
               ],
             )),
+            actions: [
+              TextButton(
+                child: const Text(
+                  "Close",
+                  style: TextStyle(),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           );
         });
   }

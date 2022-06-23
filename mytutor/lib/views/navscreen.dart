@@ -60,7 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Tutors',
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.pink,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment_turned_in),
@@ -70,7 +70,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favourite',
-            backgroundColor: Colors.pink,
+            backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:mytutor/constants.dart';
 import 'package:mytutor/views/navscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mytutor/views/registerscreen.dart';
@@ -231,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       http.post(
-          Uri.parse("http://10.31.154.113/mytutor/mobile/php/login_user.php"),
+          Uri.parse(CONSTANTS.server + "/mytutor/mobile/php/login_user.php"),
           body: {"email": _email, "password": _password}).then((response) {
         // ignore: avoid_print
         print(response.body);

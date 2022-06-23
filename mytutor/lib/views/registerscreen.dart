@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:mytutor/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -296,7 +297,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String _email = emailCtrl.text;
     String _password = passwordCtrl.text;
     String _address = addressCtrl.text;
-    http.post(Uri.parse("http://10.31.154.113/mytutor/mobile/php/register.php"),
+    http.post(Uri.parse(CONSTANTS.server + "/mytutor/mobile/php/register.php"),
         body: {
           "name": _name,
           "phonenumber": _phonenum,

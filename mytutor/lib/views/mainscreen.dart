@@ -2,13 +2,17 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:mytutor/models/user.dart';
+import 'package:mytutor/views/cartScreen.dart';
 import 'package:mytutor/views/loginscreen.dart';
 import "package:mytutor/constants.dart";
 import 'package:mytutor/models/subject.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final User user;
+  const MainScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -51,7 +55,25 @@ class _MainScreenState extends State<MainScreen> {
             onPressed: () {
               _loadSearchDialog();
             },
-          )
+          ),
+          TextButton.icon(
+            onPressed: () async {
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (content) => CartScreen(
+                            user: widget.user,
+                          )));
+              _loadSubjects(1, search);
+              _loadMyCart();
+            },
+            icon: const Icon(
+              Icons.shopping_cart,
+              color: Colors.white,
+            ),
+            label: Text(widget.user.cart.toString(),
+                style: const TextStyle(color: Colors.white)),
+          ),
         ],
       ),
       drawer: Drawer(
@@ -101,7 +123,7 @@ class _MainScreenState extends State<MainScreen> {
                     flex: 2,
                     child: GridView.count(
                         crossAxisCount: 2,
-                        childAspectRatio: (1 / 1),
+                        childAspectRatio: (1 / 1.2),
                         children: List.generate(subjectList.length, (index) {
                           return InkWell(
                               splashColor: Colors.blue.withAlpha(30),
@@ -141,53 +163,74 @@ class _MainScreenState extends State<MainScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 20),
-                                      Expanded(
+                                      Flexible(
                                           flex: 4,
-                                          child: Center(
-                                            child: Column(
+                                          child: Column(children: [
+                                            Row(
                                               children: [
-                                                Text(
-                                                    subjectList[index]
-                                                        .subjectName
-                                                        .toString(),
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                Text(
-                                                    "Fees : RM" +
-                                                        double.parse(subjectList[
-                                                                    index]
-                                                                .subjectPrice
-                                                                .toString())
-                                                            .toStringAsFixed(2),
-                                                    style: const TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.purple)),
-                                                Text(
-                                                    "Sessions : " +
+                                                Expanded(
+                                                  flex: 7,
+                                                  child: Column(children: [
+                                                    Text(
                                                         subjectList[index]
-                                                            .subjectSessions
+                                                            .subjectName
                                                             .toString(),
-                                                    style: const TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.purple)),
-                                                Text(
-                                                    "Rating : " +
-                                                        double.parse(subjectList[
-                                                                    index]
-                                                                .subjectRating
-                                                                .toString())
-                                                            .toStringAsFixed(
-                                                                2) +
-                                                        "/5",
-                                                    style: const TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.purple)),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                    const SizedBox(height: 1),
+                                                    Text(
+                                                        "Fees : RM" +
+                                                            double.parse(subjectList[
+                                                                        index]
+                                                                    .subjectPrice
+                                                                    .toString())
+                                                                .toStringAsFixed(
+                                                                    2),
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                Colors.purple)),
+                                                    Text(
+                                                        "Sessions : " +
+                                                            subjectList[index]
+                                                                .subjectSessions
+                                                                .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                Colors.purple)),
+                                                    Text(
+                                                        "Rating : " +
+                                                            double.parse(subjectList[
+                                                                        index]
+                                                                    .subjectRating
+                                                                    .toString())
+                                                                .toStringAsFixed(
+                                                                    2) +
+                                                            "/5",
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                Colors.purple)),
+                                                  ]),
+                                                ),
+                                                Expanded(
+                                                    flex: 3,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          _showconfirmationDialog(
+                                                              index);
+                                                        },
+                                                        icon: const Icon(Icons
+                                                            .shopping_cart))),
                                               ],
                                             ),
-                                          ))
+                                          ]))
                                     ],
                                   )));
                         }))),
@@ -364,7 +407,23 @@ class _MainScreenState extends State<MainScreen> {
                       double.parse(subjectList[index].subjectRating.toString())
                           .toStringAsFixed(2) +
                       "/5"),
+                  const SizedBox(height: 20),
                 ]),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      minimumSize: const Size(100, 40),
+                    ),
+                    onPressed: () {
+                      _showconfirmationDialog(index);
+                    },
+                    child: const Text('Add to Cart'),
+                  ),
+                ),
               ],
             )),
             actions: [
@@ -409,5 +468,102 @@ class _MainScreenState extends State<MainScreen> {
       ),
       onTap: onTap,
     );
+  }
+
+  void _showconfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //backgroundColor: const Color.fromARGB(255, 228, 188, 235),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: const Text(
+            "Add this subject to your cart",
+            style: TextStyle(),
+          ),
+          content: const Text("Are you sure?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                _addtoCart(index);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _addtoCart(int index) {
+    http.post(
+        Uri.parse(CONSTANTS.server + "/mytutor/mobile/php/insert_cart.php"),
+        body: {
+          "email": widget.user.email.toString(),
+          "subjectID": subjectList[index].subjectID.toString(),
+        }).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response(
+            'Error', 408); // Request Timeout response status code
+      },
+    ).then((response) {
+      // ignore: avoid_print
+      print(response.body);
+      var jsondata = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && jsondata['status'] == 'success') {
+        // ignore: avoid_print
+        print(jsondata['data']['carttotal'].toString());
+        setState(() {
+          widget.user.cart = jsondata['data']['carttotal'].toString();
+        });
+        Fluttertoast.showToast(
+            msg: "Subject successfully added to your cart",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0);
+      }
+    });
+  }
+
+  void _loadMyCart() {
+    http.post(
+        Uri.parse(CONSTANTS.server + "/mytutor/mobile/php/load_mycartqty.php"),
+        body: {
+          "email": widget.user.email.toString(),
+        }).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response(
+            'Error', 408); // Request Timeout response status code
+      },
+    ).then((response) {
+      // ignore: avoid_print
+      print(response.body);
+      var jsondata = jsonDecode(response.body);
+      if (response.statusCode == 200 && jsondata['status'] == 'success') {
+        // ignore: avoid_print
+        print(jsondata['data']['carttotal'].toString());
+        setState(() {
+          widget.user.cart = jsondata['data']['carttotal'].toString();
+        });
+      }
+    });
   }
 }

@@ -1,54 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:mytutor/models/user.dart';
 import 'package:mytutor/views/tutorscreen.dart';
 import 'package:mytutor/views/mainscreen.dart';
 
-void main() => runApp(const NavScreen());
-
-class NavScreen extends StatelessWidget {
-  const NavScreen({Key? key}) : super(key: key);
-
-  static const String _title = 'My Tutor';
+class NavScreen extends StatefulWidget {
+  final User user;
+  const NavScreen({Key? key, required this.user}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
-      home: const MyStatefulWidget(),
-    );
-  }
+  State<NavScreen> createState() => _NavScreenState();
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _NavScreenState extends State<NavScreen> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    MainScreen(),
-    TutorScreen(),
-    MainScreen(),
-    MainScreen(),
-    MainScreen(),
-  ];
+  late List<Widget> _pages;
 
-  void _onItemTapped(int index) {
+  void _onTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
   @override
+  void initState() {
+    super.initState();
+    _pages = <Widget>[
+      MainScreen(user: widget.user),
+      const TutorScreen(),
+      MainScreen(user: widget.user),
+      MainScreen(user: widget.user),
+      MainScreen(user: widget.user),
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _pages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -79,8 +68,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
+        selectedItemColor: Colors.black,
+        onTap: _onTapped,
       ),
     );
   }

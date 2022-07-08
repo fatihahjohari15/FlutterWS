@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:mytutor/constants.dart';
+import 'package:mytutor/models/user.dart';
 import 'package:mytutor/views/navscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mytutor/views/registerscreen.dart';
@@ -234,17 +236,21 @@ class _LoginScreenState extends State<LoginScreen> {
       http.post(
           Uri.parse(CONSTANTS.server + "/mytutor/mobile/php/login_user.php"),
           body: {"email": _email, "password": _password}).then((response) {
-        // ignore: avoid_print
-        print(response.body);
-        if (response.body == "success") {
+        //print(response.body);
+        var data = jsonDecode(response.body);
+        if (response.statusCode == 200 && data['status'] == 'success') {
           Fluttertoast.showToast(
               msg: "Login Success",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
               fontSize: 16.0);
+          var extractdata = data['data'];
+          User user = User.fromJson(extractdata);
+          // ignore: avoid_print
+          print(user.email);
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (content) => const NavScreen()));
+              MaterialPageRoute(builder: (content) => NavScreen(user: user)));
         } else {
           Fluttertoast.showToast(
               msg: "Login Failed",

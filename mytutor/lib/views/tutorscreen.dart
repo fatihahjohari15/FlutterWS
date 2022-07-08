@@ -73,7 +73,7 @@ class _TutorScreenState extends State<TutorScreen> {
                 Expanded(
                     child: GridView.count(
                         crossAxisCount: 2,
-                        childAspectRatio: (1 / 1.8),
+                        childAspectRatio: (1 / 1.9),
                         children: List.generate(tutorList!.length, (index) {
                           return InkWell(
                               onTap: () => {_loadTutorDetails(index)},

@@ -7,6 +7,7 @@ import 'package:mytutor/constants.dart';
 import 'package:mytutor/models/cart.dart';
 import 'package:mytutor/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:mytutor/views/paymentscreen.dart';
 
 class CartScreen extends StatefulWidget {
   final User user;
@@ -159,7 +160,9 @@ class _CartScreenState extends State<CartScreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _onPaynowDialog();
+                              },
                               child: const Text("Pay Now",
                                   style: TextStyle(fontSize: 18)),
                             ),
@@ -246,5 +249,48 @@ class _CartScreenState extends State<CartScreen> {
             fontSize: 16.0);
       }
     });
+  }
+
+  void _onPaynowDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: const Text(
+            "Pay Now",
+            style: TextStyle(),
+          ),
+          content: const Text("Are you sure?", style: TextStyle()),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) => PaymentScreen(
+                            user: widget.user, totalpayable: totalpayable)));
+                _loadCart();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

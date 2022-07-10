@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:mytutor/models/user.dart';
-import 'package:mytutor/views/cartScreen.dart';
+import 'package:mytutor/views/cartscreen.dart';
 import 'package:mytutor/views/loginscreen.dart';
 import "package:mytutor/constants.dart";
 import 'package:mytutor/models/subject.dart';
